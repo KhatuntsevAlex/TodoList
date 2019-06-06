@@ -112,7 +112,11 @@ const tasksReducer = (state = initialState, action) => {
         return {
           ...state,
           tasks: state.tasks.map(task => {
-            if (task.id === changedTaskid) return { ...task, text, status };
+            if (task.id === changedTaskid) {
+              if (Number(status)===0) status=0
+              else status=10
+              return { ...task, text, status };
+            }            
             return { ...task };
           })
         };

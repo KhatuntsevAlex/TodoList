@@ -22,13 +22,14 @@ const Task = props => {
                     isTaskEditing ?
                         <input
                             type='text'
+                            maxLength='2'                            
                             style={{ width: 100 + '%', height: 100 + '%', textAlign: 'center' }}
                             onChange={(e) => props.onTaskDataChange(text, e.target.value, id)}
                             value={status} /> :
                         status
                 }
             </td>
-            <td style={{ whiteSpace: "nowrap" }}>
+            <td style={{ whiteSpace: "nowrap", verticalAlign: 'middle', textAlign: 'center' }}>
 
                 <button
                     className={props.isConfirmed ? "btn btn-primary btn-sm" : "btn btn-secondary btn-sm"}
