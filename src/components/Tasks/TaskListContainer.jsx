@@ -20,10 +20,8 @@ class TasksListContainer extends Component {
     }
 
     confirmChanges = (id) => {
-        let that = this;
-        let taskIndex = that.props.tasks.findIndex(task => task.id === id)
-        let {text, status} = that.props.tasks[taskIndex]
-       
+        let that = this;       
+        let {text, status} = this.props.tasks.find(task => task.id===id)        
         $(document).ready(function () {
             var form = new FormData();
             form.append("text", text);
