@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import NewTask from './NewTask';
 import $ from 'jquery'
-import { addTask, setTasks, setTotalTaskCount } from '../../../redux/tasksList-reduser';
+import { addTask, setTasks, setTotalTaskCount, loadingStart } from '../../../redux/tasksList-reduser';
 import { onNewTaskDataChange } from '../../../redux/newTask-reduser';
-import * as axios from 'axios'
 import { setTask, getTasks } from '../../../api/api';
 
 
@@ -13,8 +12,10 @@ class NewTaskContainer extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         let that = this;
+        this.props.loadingStart()
         $(document).ready(function () {
             let { newTaskName, newTaskEmail, newTaskText } = that.props.newTask;
+            let { sortDirection, sortField } = that.props.sortData
             var form = new FormData();
             form.append("username", newTaskName);
             form.append("email", newTaskEmail);
@@ -28,8 +29,8 @@ class NewTaskContainer extends Component {
                     }
                 })
                 .then(
-                    getTasks(that.props.developer, that.props.currentPage, that.props.sortField, that.props.sortDirection)
-                        .then(data => {
+                    getTasks(that.props.developer, that.props.currentPage, sortField, sortDirection)
+                        .then(data => {debugger
                             if (data.status === 'ok') {                                
                                 that.props.setTasks(data.message.tasks);
                                 that.props.setTotalTaskCount(data.message.total_task_count);
@@ -52,10 +53,12 @@ class NewTaskContainer extends Component {
 let mapStateToProps = state => (
     {
         newTask: state.newTask,
-        developer: state.tasksData.developer,        
+        developer: state.tasksData.developer,   
+        currentPage: state.tasksData.currentPage,
+        sortData: state.tasksData.sortData,     
     }
 )
 
-let mapDispathToProps = { addTask, onNewTaskDataChange, setTotalTaskCount, setTasks }
+let mapDispathToProps = { addTask, onNewTaskDataChange, setTotalTaskCount, setTasks, loadingStart }
 
 export default connect(mapStateToProps, mapDispathToProps)(NewTaskContainer)

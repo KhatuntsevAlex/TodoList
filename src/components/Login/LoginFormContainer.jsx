@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import LoginForm from "./LoginForm"
 import { connect } from "react-redux"
 import { setLoginData, onChangeLoginData } from "../../redux/login-reduser"
-import * as axios from "axios"
 import $ from 'jquery'
 import { login } from "../../api/api";
 

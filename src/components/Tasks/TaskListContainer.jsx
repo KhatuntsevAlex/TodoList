@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
-import * as axios from 'axios'
 import TasksList from './TasksList'
 import { setTasks, setTotalTaskCount, onSort, onTaskEdit, onTaskDataChange } from '../../redux/tasksList-reduser';
 import { Zoom } from 'react-preloaders'

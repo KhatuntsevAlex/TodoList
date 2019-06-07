@@ -1,18 +1,15 @@
 import React, { Component } from 'react'
-import * as axios from 'axios'
 import ReactPaginate from "react-paginate"
 import { connect } from 'react-redux'
-import { setTasks, setTotalTaskCount, setCurrentPage } from '../../../redux/tasksList-reduser';
+import { setTasks, setTotalTaskCount, setCurrentPage, loadingStart } from '../../../redux/tasksList-reduser';
 import { getTasks } from '../../../api/api';
 
 class PaginationContainer extends Component {
-    constructor(props) {
-        super(props)
-    }
-
+   
     onPageChanged = (pageIndex) => {
         let page = pageIndex.selected + 1
         let { sortField, sortDirection } = this.props.sortData
+        this.props.loadingStart()
         getTasks(this.props.developer, page, sortField, sortDirection)
             .then(data => {
                 if (data.status === 'ok') {
@@ -61,6 +58,6 @@ let mapStateToProps = state => (
     }
 )
 
-let mapDispathToProps = { setTasks, setTotalTaskCount, setCurrentPage }
+let mapDispathToProps = { setTasks, setTotalTaskCount, setCurrentPage, loadingStart }
 
 export default connect(mapStateToProps, mapDispathToProps)(PaginationContainer)

@@ -7,6 +7,7 @@ const ON_SORT = "ON_SORT";
 const ON_TASK_EDIT = "ON_TASK_EDIT";
 const ON_TASK_DATA_CHANGE = "ON_TASK_DATA_CHANGE";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+const LOADING_START = "LOADING_START";
 
 let initialState = {
   developer: "Aleksandr_Khatuntsev",
@@ -31,21 +32,7 @@ let initialState = {
       email: "test_user_3@example.com",
       text: "Hello from user 3!",
       status: 10
-    },
-    {
-      id: 4,
-      username: "Test User 4",
-      email: "test_user_4@example.com",
-      text: "Hello from user 4!",
-      status: 0
-    },
-    {
-      id: 5,
-      username: "Test User 5",
-      email: "test_user_5@example.com",
-      text: "Hello from user 5!",
-      status: 10
-    }
+    },    
   ],
   total_task_count: "",
   pageSize: 3,
@@ -67,6 +54,9 @@ const tasksReducer = (state = initialState, action) => {
 
     case SET_CURRENT_PAGE:
       return { ...state, currentPage: action.currentPage };
+
+    case LOADING_START:
+      return { ...state, isFetching: true };
 
     case ADD_TASK:
       let totalTaskCount = Number(state.total_task_count) + 1;
@@ -133,6 +123,7 @@ export const setTotalTaskCount = totalTaskCount => ({
   totalTaskCount
 });
 export const addTask = newTask => ({ type: ADD_TASK, newTask });
+export const loadingStart = () => ({ type: LOADING_START });
 export const setCurrentPage = currentPage => ({ type: SET_CURRENT_PAGE, currentPage });
 export const onSort = sortField => ({ type: ON_SORT, sortField });
 export const onTaskEdit = (id, bool) => ({ type: ON_TASK_EDIT, id, bool });

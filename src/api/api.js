@@ -1,5 +1,4 @@
 import * as axios from "axios";
-import $ from "jquery";
 
 export const getTasks = (developer, currentPage, sortField, sortDirection) =>
   axios
