@@ -10,17 +10,15 @@ const Task = props => {
             <td>
                 {
                     isTaskEditing ?
-                        <textarea
-                        cols="5" 
+                        <textarea                         
                         rows="2"
-                            style={{ width: 100 + '%' }}
+                            style={{ width: 350 + 'px' }}
                             onChange={(e) => props.onTaskDataChange(e.target.value, status, id)}
                             value={text} /> :
                         text
                 }
             </td>
             <td style={{ verticalAlign: 'middle', textAlign: 'center' }}>
-                <div style={{width: 30+'px', height:30+'px', borderRadius: 50+'%', lineHeight: 30+'px', backgroundColor: status===10 ? 'lightgreen': 'red'}}>
                     {isTaskEditing ?
                         <input
                             type='text'
@@ -29,9 +27,11 @@ const Task = props => {
                             onChange={(e) => props.onTaskDataChange(text, e.target.value, id)}
                             value={status}
                         /> :
-                        /* status */''
+                        status ?
+                        <span style={{color: 'green', fontSize: 'x-large'}}>&#10004;</span>:
+                        <span style={{color: 'red', fontSize: 'x-large'}}>&#10008;</span>
+
                     }
-                </div>
 
             </td>
             <td style={{ whiteSpace: "nowrap", verticalAlign: 'middle', textAlign: 'center' }}>

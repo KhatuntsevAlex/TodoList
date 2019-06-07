@@ -6,7 +6,7 @@ const LoginForm = (props) => (
             props.isConfirmed ?
                 <span
                     className="font-weight-bolder"
-                    style={{ margin: 20 + 'px' }}
+                    style={{ margin: 20 + 'px', color: 'green' }}
                 >
                     Administrator mode
                 </span> :

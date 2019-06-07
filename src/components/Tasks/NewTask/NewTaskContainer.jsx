@@ -12,8 +12,8 @@ class NewTaskContainer extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         let that = this;
-        this.props.loadingStart()
-        $(document).ready(function () {
+/*         this.props.loadingStart()
+ */        $(document).ready(function () {
             let { newTaskName, newTaskEmail, newTaskText } = that.props.newTask;
             let { sortDirection, sortField } = that.props.sortData
             var form = new FormData();
@@ -30,7 +30,7 @@ class NewTaskContainer extends Component {
                 })
                 .then(
                     getTasks(that.props.developer, that.props.currentPage, sortField, sortDirection)
-                        .then(data => {debugger
+                        .then(data => {
                             if (data.status === 'ok') {                                
                                 that.props.setTasks(data.message.tasks);
                                 that.props.setTotalTaskCount(data.message.total_task_count);

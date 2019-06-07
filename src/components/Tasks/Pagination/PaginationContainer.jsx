@@ -9,8 +9,8 @@ class PaginationContainer extends Component {
     onPageChanged = (pageIndex) => {
         let page = pageIndex.selected + 1
         let { sortField, sortDirection } = this.props.sortData
-        this.props.loadingStart()
-        getTasks(this.props.developer, page, sortField, sortDirection)
+/*         this.props.loadingStart()
+ */        getTasks(this.props.developer, page, sortField, sortDirection)
             .then(data => {
                 if (data.status === 'ok') {
                     this.props.setCurrentPage(page);

@@ -7,7 +7,7 @@ import $ from 'jquery'
 import { getTasks, setTaskChanges } from '../../api/api';
 
 class TasksListContainer extends Component {
-   
+
     componentDidMount() {
         let { sortField, sortDirection } = this.props.sortData
         getTasks(this.props.developer, this.props.currentPage, sortField, sortDirection)
@@ -19,13 +19,13 @@ class TasksListContainer extends Component {
     }
 
     confirmChanges = (id) => {
-        let that = this;       
-        let {text, status} = this.props.tasks.find(task => task.id===id)        
+        let that = this;
+        let { text, status } = this.props.tasks.find(task => task.id === id)
         $(document).ready(function () {
             var form = new FormData();
             form.append("text", text);
             form.append("status", status);
-            form.append("token", that.props.token);            
+            form.append("token", that.props.token);
             setTaskChanges(that.props.developer, form, id)
                 .then(data => {
                     if (data.status === 'ok')
@@ -37,7 +37,8 @@ class TasksListContainer extends Component {
     render() {
         return <>
             {
-                this.props.isFetching ? <Zoom /> :
+                this.props.isFetching ?
+                    <Zoom /> :
                     <TasksList
                         tasks={this.props.tasks}
                         onSort={this.props.onSort}
