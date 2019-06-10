@@ -1,4 +1,5 @@
 import _ from "lodash";
+import Api from '../api/api'
 
 const SET_TASKS = "SET_TASKS";
 const SET_TOTAL_TASK_COUNT = "SET_TOTAL_TASK_COUNT";
@@ -10,31 +11,9 @@ const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const LOADING_START = "LOADING_START";
 
 let initialState = {
-  developer: "Aleksandr_Khatuntsev",
-  tasks: [
-    {
-      id: 1,
-      username: "Test User",
-      email: "test_user_1@example.com",
-      text: "Hello, world!",
-      status: 10
-    },
-    {
-      id: 2,
-      username: "Test User 2",
-      email: "test_user_2@example.com",
-      text: "Hello from user 2!",
-      status: 0
-    },
-    {
-      id: 3,
-      username: "Test User 3",
-      email: "test_user_3@example.com",
-      text: "Hello from user 3!",
-      status: 10
-    },    
-  ],
-  total_task_count: "",
+  developer: "Aleksandr___Khatuntsev",
+  tasks: [],
+  total_task_count: 0,
   pageSize: 3,
   currentPage: 1,
   isFetching: true,
@@ -84,7 +63,7 @@ const tasksReducer = (state = initialState, action) => {
       };
 
     case ON_TASK_EDIT:
-      let {id, bool} = action
+      let { id, bool } = action;
       return {
         ...state,
         tasks: state.tasks.map(task => {
@@ -99,24 +78,24 @@ const tasksReducer = (state = initialState, action) => {
 
     case ON_TASK_DATA_CHANGE:
       let { text, status, changedTaskid } = action;
-        return {
-          ...state,
-          tasks: state.tasks.map(task => {
-            if (task.id === changedTaskid) {
-              if (Number(status)===0) status=0
-              else status=10
-              return { ...task, text, status };
-            }            
-            return { ...task };
-          })
-        };
+      return {
+        ...state,
+        tasks: state.tasks.map(task => {
+          if (task.id === changedTaskid) {
+            if (Number(status) === 0) status = 0;
+            else status = 10;
+            return { ...task, text, status };
+          }
+          return { ...task };
+        })
+      };
     default:
       return state;
   }
 };
-
 export default tasksReducer;
 
+//Action creators
 export const setTasks = tasks => ({ type: SET_TASKS, tasks });
 export const setTotalTaskCount = totalTaskCount => ({
   type: SET_TOTAL_TASK_COUNT,
@@ -124,7 +103,10 @@ export const setTotalTaskCount = totalTaskCount => ({
 });
 export const addTask = newTask => ({ type: ADD_TASK, newTask });
 export const loadingStart = () => ({ type: LOADING_START });
-export const setCurrentPage = currentPage => ({ type: SET_CURRENT_PAGE, currentPage });
+export const setCurrentPage = currentPage => ({
+  type: SET_CURRENT_PAGE,
+  currentPage
+});
 export const onSort = sortField => ({ type: ON_SORT, sortField });
 export const onTaskEdit = (id, bool) => ({ type: ON_TASK_EDIT, id, bool });
 export const onTaskDataChange = (text, status, changedTaskid) => ({
@@ -133,3 +115,20 @@ export const onTaskDataChange = (text, status, changedTaskid) => ({
   status,
   changedTaskid
 });
+
+//thunk creators
+export const getTasks = (developer, currentPage, sortData) => dispatch => {
+  let { sortField, sortDirection } = sortData;
+  Api.getTasks(developer, currentPage, sortField, sortDirection).then(data => {
+    if (data.status === "ok") dispatch(setTasks(data.message.tasks));
+    dispatch(setTotalTaskCount(data.message.total_task_count));
+    dispatch(setCurrentPage(currentPage));
+  });
+};
+export const setTaskChanges = (developer, form, id) => dispatch => {
+  Api.setTaskChanges(developer, form, id).then(data => {
+    if (data.status === "ok") dispatch(onTaskEdit(id, false));
+  });
+};
+
+

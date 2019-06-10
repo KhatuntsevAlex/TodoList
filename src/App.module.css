@@ -1,0 +1,26 @@
+.wrapper {
+    display: grid;
+    width: 99%;    
+    margin: 10px 0 0 10px;
+    grid-template-areas: 
+    "name login" 
+    "pagination ." 
+    "task_list add_form";
+    grid-template-rows: 40px 40px 1fr;
+    grid-template-columns: 7fr 3fr;
+    grid-gap: 10px;
+}
+
+
+.login {
+    grid-area: login;
+}
+.pagination {
+    grid-area: pagination;
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
+.add_form {
+    grid-area: add_form;
+}

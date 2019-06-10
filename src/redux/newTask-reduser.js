@@ -1,3 +1,5 @@
+import Api from '../api/api'
+
 const ON_NEW_TASK_DATA_CHANGE = 'ON_NEW_TASK_DATA_CHANGE'
 
 let initialState = {
@@ -22,6 +24,9 @@ const NewTaskReducer = (state = initialState, action) => {
   }
 };
 
+export default NewTaskReducer;
+
+//Action creators
 export const onNewTaskDataChange = (
   newTaskName,
   newTaskEmail,
@@ -33,4 +38,10 @@ export const onNewTaskDataChange = (
   newTaskText
 });
 
-export default NewTaskReducer;
+//Thunk creators
+export const setTask = (developer, form) => dispatch => {
+  Api.setTask(developer, form).then(dispatch(onNewTaskDataChange('','','')))
+}
+
+
+

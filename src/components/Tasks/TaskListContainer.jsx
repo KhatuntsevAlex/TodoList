@@ -1,55 +1,58 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import TasksList from './TasksList'
-import { setTasks, setTotalTaskCount, onSort, onTaskEdit, onTaskDataChange } from '../../redux/tasksList-reduser';
+import {
+    setTotalTaskCount,
+    onSort,
+    onTaskEdit,
+    onTaskDataChange,
+    getTasks,
+    setTaskChanges
+} from '../../redux/tasksList-reduser';
 import { Zoom } from 'react-preloaders'
-import $ from 'jquery'
-import { getTasks, setTaskChanges } from '../../api/api';
+import s from "./TaskList.module.css";
 
 class TasksListContainer extends Component {
 
     componentDidMount() {
-        let { sortField, sortDirection } = this.props.sortData
-        getTasks(this.props.developer, this.props.currentPage, sortField, sortDirection)
-            .then(data => {
-                if (data.status === 'ok')
-                    this.props.setTasks(data.message.tasks);
-                this.props.setTotalTaskCount(data.message.total_task_count);
-            });
+        this.props.getTasks(this.props.developer, this.props.currentPage, this.props.sortData)
     }
 
     confirmChanges = (id) => {
         let that = this;
         let { text, status } = this.props.tasks.find(task => task.id === id)
-        $(document).ready(function () {
-            var form = new FormData();
-            form.append("text", text);
-            form.append("status", status);
-            form.append("token", that.props.token);
-            setTaskChanges(that.props.developer, form, id)
-                .then(data => {
-                    if (data.status === 'ok')
-                        that.props.onTaskEdit(id, false)
-                })
-        });
+        var form = new FormData();
+        form.append("text", text);
+        form.append("status", status);
+        form.append("token", that.props.token);
+        that.props.setTaskChanges(that.props.developer, form, id)
     }
 
     render() {
         return <>
-            {
-                this.props.isFetching ?
-                    <Zoom /> :
-                    <TasksList
-                        tasks={this.props.tasks}
-                        onSort={this.props.onSort}
-                        sortData={this.props.sortData}
-                        isConfirmed={this.props.isConfirmed}
-                        onTaskEdit={this.props.onTaskEdit}
-                        confirmChanges={this.confirmChanges}
-                        onTaskDataChange={this.props.onTaskDataChange}
-
-                    />
-            }
+            <div className={s.name}>
+                <span
+                    className={s.developer}
+                    style={{ textTransform: 'capitalize' }}
+                >
+                    {this.props.developer}'s
+                </span> todo list
+            </div>
+            <div className={s.task_list}>
+                {
+                    this.props.isFetching ?
+                        <Zoom /> :
+                        <TasksList
+                            tasks={this.props.tasks}
+                            onSort={this.props.onSort}
+                            sortData={this.props.sortData}
+                            isConfirmed={this.props.isConfirmed}
+                            onTaskEdit={this.props.onTaskEdit}
+                            confirmChanges={this.confirmChanges}
+                            onTaskDataChange={this.props.onTaskDataChange}
+                        />
+                }
+            </div>
         </>
     }
 }
@@ -63,10 +66,9 @@ let mapStateToProps = state => (
         sortData: state.tasksData.sortData,
         isConfirmed: state.login.isConfirmed,
         token: state.login.token,
-
     }
 )
 
-let mapDispathToProps = { setTasks, setTotalTaskCount, onSort, onTaskEdit, onTaskDataChange }
+let mapDispathToProps = { setTotalTaskCount, onSort, onTaskEdit, onTaskDataChange, getTasks, setTaskChanges }
 
 export default connect(mapStateToProps, mapDispathToProps)(TasksListContainer)

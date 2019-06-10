@@ -1,0 +1,12 @@
+.name {
+    grid-area: name;
+    text-align: center;
+    line-height: 40px;
+}
+
+.task_list {
+    grid-area: task_list;       
+}
+.developer {
+    font-weight: bold;
+}

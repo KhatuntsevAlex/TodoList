@@ -1,43 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import NewTask from './NewTask';
-import $ from 'jquery'
-import { addTask, setTasks, setTotalTaskCount, loadingStart } from '../../../redux/tasksList-reduser';
-import { onNewTaskDataChange } from '../../../redux/newTask-reduser';
-import { setTask, getTasks } from '../../../api/api';
+import { getTasks } from '../../../redux/tasksList-reduser';
+import { setTask, onNewTaskDataChange } from '../../../redux/newTask-reduser';
 
 
 class NewTaskContainer extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        let that = this;
-/*         this.props.loadingStart()
- */        $(document).ready(function () {
-            let { newTaskName, newTaskEmail, newTaskText } = that.props.newTask;
-            let { sortDirection, sortField } = that.props.sortData
-            var form = new FormData();
-            form.append("username", newTaskName);
-            form.append("email", newTaskEmail);
-            form.append("text", newTaskText);
+        let { newTaskName, newTaskEmail, newTaskText } = this.props.newTask;
+        var form = new FormData();
+        form.append("username", newTaskName);
+        form.append("email", newTaskEmail);
+        form.append("text", newTaskText);
 
-            setTask(that.props.developer, form)
-                .then(data => {
-                    if (data.status === 'ok') {
-/*                         that.props.addTask(data.message);
- */                        that.props.onNewTaskDataChange("", "", "");
-                    }
-                })
-                .then(
-                    getTasks(that.props.developer, that.props.currentPage, sortField, sortDirection)
-                        .then(data => {
-                            if (data.status === 'ok') {                                
-                                that.props.setTasks(data.message.tasks);
-                                that.props.setTotalTaskCount(data.message.total_task_count);
-                            }
-                        })
-                )
-        })
+        this.props.setTask(this.props.developer, form)
+        this.props.getTasks(this.props.developer, this.props.currentPage, this.props.sortData)
+        
     }
 
     render() {
@@ -47,18 +27,17 @@ class NewTaskContainer extends Component {
             onNewTaskDataChange={this.props.onNewTaskDataChange}
         />
     }
-
 }
 
 let mapStateToProps = state => (
     {
         newTask: state.newTask,
-        developer: state.tasksData.developer,   
+        developer: state.tasksData.developer,
         currentPage: state.tasksData.currentPage,
-        sortData: state.tasksData.sortData,     
+        sortData: state.tasksData.sortData,
     }
 )
 
-let mapDispathToProps = { addTask, onNewTaskDataChange, setTotalTaskCount, setTasks, loadingStart }
+let mapDispathToProps = { onNewTaskDataChange, setTask, getTasks }
 
 export default connect(mapStateToProps, mapDispathToProps)(NewTaskContainer)

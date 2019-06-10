@@ -12,7 +12,7 @@ const Task = props => {
                     isTaskEditing ?
                         <textarea                         
                         rows="2"
-                            style={{ width: 350 + 'px' }}
+                        style={{width: 100 + '%'}}                           
                             onChange={(e) => props.onTaskDataChange(e.target.value, status, id)}
                             value={text} /> :
                         text

@@ -14,13 +14,12 @@ const TasksList = props => {
       onTaskDataChange={props.onTaskDataChange}
     />
   )
-  let {sortField, sortDirection} = props.sortData
-  
+  let { sortField, sortDirection } = props.sortData
+
   let SortDIrectionOf = (field) => sortField === field ? sortDirection : ''
   return (
     <table
       className="table table-hover table-dark"
-      style={{ width: 65 + "%", float: 'left' }}
     >
       <thead>
         <tr>
@@ -73,7 +72,7 @@ const TasksList = props => {
             scope="col"
             style={{ width: 60 + 'px', fontSize: 'xx-small', textAlign: 'center', color: 'lightgrey' }}
           >
-            {!props.isConfirmed && 'For autorized only'}
+            {!props.isConfirmed && 'Administrator only'}
           </th>
 
         </tr>

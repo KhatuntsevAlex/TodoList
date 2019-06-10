@@ -3,7 +3,7 @@ import React from 'react'
 const NewTaskForm = props => {
     let { newTaskName, newTaskEmail, newTaskText } = props.newTask
     return (
-        <div className="card" style={{ width: 30 + '%', float: 'right', margin: 0 }}>
+        <div className="card">
             <h5 className="card-header info-color white-text text-center py-4">
                 <strong>ADD TASK</strong>
             </h5>

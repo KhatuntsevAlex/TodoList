@@ -1,3 +1,5 @@
+import Api from '../api/api'
+
 const SET_CONFIRMATION = "SET_LOGIN_DATA";
 const ON_CHANGE_LOGIN_DATA = "ON_CHANGE_LOGIN_DATA";
 
@@ -31,9 +33,17 @@ const loginReduser = (state = initialState, action) => {
 export default loginReduser;
 
 export const setLoginData = (token)  => ({ type: SET_CONFIRMATION, token });
-
 export const onChangeLoginData = (userName, userPassword) => ({
   type: ON_CHANGE_LOGIN_DATA,
   userName,
   userPassword
 });
+
+export const login = (developer, form) => dispatch => {
+  Api.login(developer, form).then(data => {
+    if (data.status === 'ok') {
+      dispatch(setLoginData(data.message.token))
+      dispatch(onChangeLoginData('', ''))
+    }
+})
+}

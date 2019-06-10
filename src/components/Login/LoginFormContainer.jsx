@@ -1,29 +1,19 @@
 import React, { Component } from "react"
 import LoginForm from "./LoginForm"
 import { connect } from "react-redux"
-import { setLoginData, onChangeLoginData } from "../../redux/login-reduser"
+import { login, onChangeLoginData } from "../../redux/login-reduser"
 import $ from 'jquery'
-import { login } from "../../api/api";
 
 class LoginFormContainer extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    let that = this;
-    $(document).ready(function () {
-      let { userName, userPassword } = that.props;
+      let { userName, userPassword } = this.props;
       var form = new FormData();
       form.append("username", userName);
       form.append("password", userPassword);
 
-      login(that.props.developer, form)
-        .then(data => {
-          if (data.status === 'ok') {
-            that.props.setLoginData(data.message.token)
-            that.props.onChangeLoginData('', '')
-          }
-        })
-    })
+      this.props.login(this.props.developer, form)       
   }
 
   render() {
@@ -47,7 +37,7 @@ let mapStateToProps = state => {
   };
 }
 
-let mapDispatchToProps = { setLoginData, onChangeLoginData }
+let mapDispatchToProps = { onChangeLoginData, login }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginFormContainer)
 
