@@ -1,4 +1,4 @@
-import Api from '../api/api'
+import {tasksApi} from '../api/api'
 
 const ON_NEW_TASK_DATA_CHANGE = 'ON_NEW_TASK_DATA_CHANGE'
 
@@ -40,7 +40,7 @@ export const onNewTaskDataChange = (
 
 //Thunk creators
 export const setTask = (developer, form) => dispatch => {
-  Api.setTask(developer, form).then(dispatch(onNewTaskDataChange('','','')))
+  tasksApi.setTask(developer, form).then(dispatch(onNewTaskDataChange('','','')))
 }
 
 

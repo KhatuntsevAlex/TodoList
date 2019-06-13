@@ -1,66 +1,34 @@
 import * as axios from "axios";
 
-const Api = {
-  getTasks: (developer, currentPage, sortField, sortDirection) =>
-    axios
+const instance = axios.create({
+  baseURL: `https://uxcandy.com/~shapoval/test-task-backend/v2/`,
+});
+
+export const tasksApi = {
+  getTasks(developer, currentPage, sortField, sortDirection) {
+    return instance
       .get(
-        `https://uxcandy.com/~shapoval/test-task-backend/v2/?developer=${developer}&page=${currentPage}&sort_field=${sortField}&sort_direction=${sortDirection}`
+        `?developer=${developer}&page=${currentPage}&sort_field=${sortField}&sort_direction=${sortDirection}`
       )
-      .then(response => response.data),
+      .then(response => response.data);
+  },
+  setTask(developer, form) {
+    return instance
+      .post(`create/?developer=${developer}`, form)
+      .then(response => response.data);
+  },
 
-  setTask: (developer, form) =>
-    axios
-      .post(
-        `https://uxcandy.com/~shapoval/test-task-backend/v2/create/?developer=${developer}`,
-        form
-      )
-      .then(response => response.data),
-
-  login: (developer, form) =>
-    axios
-      .post(
-        `https://uxcandy.com/~shapoval/test-task-backend/v2/login/?developer=${developer}`,
-        form
-      )
-      .then(response => response.data),
-
-      setTaskChanges: (developer, form, id) =>
-      axios
-        .post(
-          `https://uxcandy.com/~shapoval/test-task-backend/v2/edit/${id}/?developer=${developer}`,
-          form
-        )
-        .then(response => response.data),
+  updateTask(developer, form, id) {
+    return instance
+      .post(`edit/${id}/?developer=${developer}`, form)
+      .then(response => response.data);
+  }
 };
-export default Api
 
-/* export const getTasks = (developer, currentPage, sortField, sortDirection) =>
-  axios
-    .get(
-      `https://uxcandy.com/~shapoval/test-task-backend/v2/?developer=${developer}&page=${currentPage}&sort_field=${sortField}&sort_direction=${sortDirection}`
-    )
-    .then(response => response.data); */
-
-/* export const setTask = (developer, form) =>
-  axios
-    .post(
-      `https://uxcandy.com/~shapoval/test-task-backend/v2/create/?developer=${developer}`,
-      form
-    )
-    .then(response => response.data); */
-
-/* export const login = (developer, form) =>
-  axios
-    .post(
-      `https://uxcandy.com/~shapoval/test-task-backend/v2/login/?developer=${developer}`,
-      form
-    )
-    .then(response => response.data); */
-
-/* export const setTaskChanges = (developer, form, id) =>
-  axios
-    .post(
-      `https://uxcandy.com/~shapoval/test-task-backend/v2/edit/${id}/?developer=${developer}`,
-      form
-    )
-    .then(response => response.data); */
+export const loginApi = {
+  login(developer, form) {
+    return instance
+      .post(`login/?developer=${developer}`, form)
+      .then(response => response.data);
+  }
+};

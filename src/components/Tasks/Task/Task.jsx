@@ -30,9 +30,7 @@ const Task = props => {
                         status ?
                         <span style={{color: 'green', fontSize: 'x-large'}}>&#10004;</span>:
                         <span style={{color: 'red', fontSize: 'x-large'}}>&#10008;</span>
-
                     }
-
             </td>
             <td style={{ whiteSpace: "nowrap", verticalAlign: 'middle', textAlign: 'center' }}>
 

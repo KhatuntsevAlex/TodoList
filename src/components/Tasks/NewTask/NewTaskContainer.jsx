@@ -16,8 +16,7 @@ class NewTaskContainer extends Component {
         form.append("text", newTaskText);
 
         this.props.setTask(this.props.developer, form)
-        this.props.getTasks(this.props.developer, this.props.currentPage, this.props.sortData)
-        
+        this.props.getTasks(this.props.developer, this.props.currentPage, this.props.sortData)        
     }
 
     render() {

@@ -1,5 +1,5 @@
 import _ from "lodash";
-import Api from '../api/api'
+import {tasksApi} from '../api/api'
 
 const SET_TASKS = "SET_TASKS";
 const SET_TOTAL_TASK_COUNT = "SET_TOTAL_TASK_COUNT";
@@ -11,7 +11,7 @@ const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const LOADING_START = "LOADING_START";
 
 let initialState = {
-  developer: "Aleksandr___Khatuntsev",
+  developer: "Aleksandr Khatuntsev",
   tasks: [],
   total_task_count: 0,
   pageSize: 3,
@@ -119,14 +119,14 @@ export const onTaskDataChange = (text, status, changedTaskid) => ({
 //thunk creators
 export const getTasks = (developer, currentPage, sortData) => dispatch => {
   let { sortField, sortDirection } = sortData;
-  Api.getTasks(developer, currentPage, sortField, sortDirection).then(data => {
+  tasksApi.getTasks(developer, currentPage, sortField, sortDirection).then(data => {
     if (data.status === "ok") dispatch(setTasks(data.message.tasks));
     dispatch(setTotalTaskCount(data.message.total_task_count));
     dispatch(setCurrentPage(currentPage));
   });
 };
-export const setTaskChanges = (developer, form, id) => dispatch => {
-  Api.setTaskChanges(developer, form, id).then(data => {
+export const updateTask = (developer, form, id) => dispatch => {
+  tasksApi.updateTask(developer, form, id).then(data => {
     if (data.status === "ok") dispatch(onTaskEdit(id, false));
   });
 };

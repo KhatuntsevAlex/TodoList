@@ -7,7 +7,7 @@ import {
     onTaskEdit,
     onTaskDataChange,
     getTasks,
-    setTaskChanges
+    updateTask
 } from '../../redux/tasksList-reduser';
 import { Zoom } from 'react-preloaders'
 import s from "./TaskList.module.css";
@@ -25,7 +25,7 @@ class TasksListContainer extends Component {
         form.append("text", text);
         form.append("status", status);
         form.append("token", that.props.token);
-        that.props.setTaskChanges(that.props.developer, form, id)
+        that.props.updateTask(that.props.developer, form, id)
     }
 
     render() {
@@ -69,6 +69,6 @@ let mapStateToProps = state => (
     }
 )
 
-let mapDispathToProps = { setTotalTaskCount, onSort, onTaskEdit, onTaskDataChange, getTasks, setTaskChanges }
+let mapDispathToProps = { setTotalTaskCount, onSort, onTaskEdit, onTaskDataChange, getTasks, updateTask }
 
 export default connect(mapStateToProps, mapDispathToProps)(TasksListContainer)

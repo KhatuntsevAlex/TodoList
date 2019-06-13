@@ -12,11 +12,8 @@ const App = () => (
     </div>
     <div className={s.pagination}>
       <PaginationContainer />
-    </div>
-    
-      <TasksListContainer />
-    
-
+    </div>    
+      <TasksListContainer />  
     <div className={s.add_form}>
       <NewTaskContainer />
     </div>
