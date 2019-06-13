@@ -2,15 +2,8 @@
 
 # dependencies
 /node_modules
-.firebase/
-.vscode/
-/build
 /.pnp
-.firebaserc/
 .pnp.js
-/firebase.json
-.cache
-tasks.json/
 
 # testing
 /coverage
