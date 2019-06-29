@@ -2,31 +2,32 @@ import {tasksApi} from '../api/api'
 
 const ON_NEW_TASK_DATA_CHANGE = 'ON_NEW_TASK_DATA_CHANGE'
 
-let initialState = {
+const initialState = {
   newTaskName: '',
   newTaskEmail: '',
   newTaskText: '',
   status: '',
-};
+}
 
 const NewTaskReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ON_NEW_TASK_DATA_CHANGE:
-      let {newTaskName, newTaskEmail, newTaskText} = action
+    case ON_NEW_TASK_DATA_CHANGE:{
+      const {newTaskName, newTaskEmail, newTaskText} = action
       return {
         ...state,
         newTaskName,
         newTaskEmail,
-        newTaskText
-      };   
+        newTaskText,
+      }
+    }  
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default NewTaskReducer;
+export default NewTaskReducer
 
-//Action creators
+// Action creators
 export const onNewTaskDataChange = (
   newTaskName,
   newTaskEmail,
@@ -35,10 +36,10 @@ export const onNewTaskDataChange = (
   type: ON_NEW_TASK_DATA_CHANGE,
   newTaskName,
   newTaskEmail,
-  newTaskText
-});
+  newTaskText,
+})
 
-//Thunk creators
+// Thunk creators
 export const setTask = (developer, form) => dispatch => {
   tasksApi.setTask(developer, form).then(dispatch(onNewTaskDataChange('','','')))
 }

@@ -50,6 +50,7 @@ class TasksListContainer extends Component {
                             onTaskEdit={this.props.onTaskEdit}
                             confirmChanges={this.confirmChanges}
                             onTaskDataChange={this.props.onTaskDataChange}
+                            isTaskEditing={this.props.isTaskEditing}
                         />
                 }
             </div>
@@ -63,6 +64,7 @@ let mapStateToProps = state => (
         developer: state.tasksData.developer,
         currentPage: state.tasksData.currentPage,
         isFetching: state.tasksData.isFetching,
+        isTaskEditing: state.tasksData.isTaskEditing,
         sortData: state.tasksData.sortData,
         isConfirmed: state.login.isConfirmed,
         token: state.login.token,

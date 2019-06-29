@@ -1,46 +1,46 @@
-import { loginApi } from "../api/api";
+import { loginApi } from '../api/api'
 
-const SET_CONFIRMATION = "SET_LOGIN_DATA";
-const ON_CHANGE_LOGIN_DATA = "ON_CHANGE_LOGIN_DATA";
+const SET_CONFIRMATION = 'SET_LOGIN_DATA'
+const ON_CHANGE_LOGIN_DATA = 'ON_CHANGE_LOGIN_DATA'
 
 
 
-let initialState = {
+const initialState = {
   isConfirmed: false,
   token: '',
   username: '',
   password: '',
-};
+}
 
 const loginReduser = (state = initialState, action) => {
   switch (action.type) {
     case SET_CONFIRMATION:
       if (action.token) {
-        return { ...state, isConfirmed: true, token: action.token};
+        return { ...state, isConfirmed: true, token: action.token}
       }
-      return { ...state, username: '', password: '', };
+      return { ...state, username: '', password: '' }
     case ON_CHANGE_LOGIN_DATA:
       return {
         ...state,
         username: action.userName,
-        password: action.userPassword
-      };
+        password: action.userPassword,
+      }
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default loginReduser;
+export default loginReduser
 
-//Action creators
-export const setLoginData = (token)  => ({ type: SET_CONFIRMATION, token });
+// Action creators
+export const setLoginData = (token)  => ({ type: SET_CONFIRMATION, token })
 export const onChangeLoginData = (userName, userPassword) => ({
   type: ON_CHANGE_LOGIN_DATA,
   userName,
-  userPassword
-});
+  userPassword,
+})
 
-//Thunk creators
+// Thunk creators
 export const login = (developer, form) => dispatch => {
   loginApi.login(developer, form).then(data => {
     if (data.status === 'ok') {

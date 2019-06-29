@@ -1,9 +1,9 @@
-import React from "react";
-import TasksListContainer from "./components/Tasks/TaskListContainer";
-import LoginFormContainer from "./components/Login/LoginFormContainer";
-import NewTaskContainer from "./components/Tasks/NewTask/NewTaskContainer";
-import PaginationContainer from "./components/Tasks/Pagination/PaginationContainer";
-import s from "./App.module.css";
+import React from 'react'
+import TasksListContainer from './components/Tasks/TaskListContainer'
+import LoginFormContainer from './components/Login/LoginFormContainer'
+import NewTaskContainer from './components/Tasks/NewTask/NewTaskContainer'
+import PaginationContainer from './components/Tasks/Pagination/PaginationContainer'
+import s from './App.module.css'
 
 const App = () => (
   <div className={s.wrapper}>
@@ -18,6 +18,6 @@ const App = () => (
       <NewTaskContainer />
     </div>
   </div>
-);
+)
 
-export default App;
+export default App
